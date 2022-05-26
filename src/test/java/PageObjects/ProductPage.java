@@ -19,6 +19,8 @@ public class ProductPage {
    @FindBy(xpath = "//*[@class='inventory_item']")
    public List<WebElement> productList;
    @FindBy(xpath = "//*[contains(@class,'price_slider')]/span[2]")
+
+   // below elements/methods are for http://practice.automationtesting.in/shop/
    private WebElement rightSlider;
    @FindBy(css = "div.price_label > span.to")
    private WebElement priceTo;
@@ -27,7 +29,7 @@ public class ProductPage {
    @FindBy(css = "button.button")
    public WebElement filterBtn;
 
-   public void setLeftSlider(int maxPrice) {
+   public void setRightSlider(int maxPrice) {
       double price;
       do {
          price = getPriceAsInt(priceTo); // $450 ---> 450
@@ -36,6 +38,6 @@ public class ProductPage {
    }
 
    public double getPriceAsInt(WebElement element) {
-      return Integer.parseInt(element.getText().substring(1));
+      return Double.parseDouble(element.getText().substring(1));
    }
 }

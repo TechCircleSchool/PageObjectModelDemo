@@ -59,13 +59,13 @@ public class LoginPageTest {
    @Test
    public void verifySliderFilter() {
       int filterToBeSet = 450;
-//      productPage.setLeftSlider(filterToBeSet);
-//      productPage.filterBtn.click();
-//      try {
-//         Thread.sleep(2000);
-//      } catch (InterruptedException e) {
-//         e.printStackTrace();
-//      }
+      productPage.setRightSlider(filterToBeSet);
+      productPage.filterBtn.click();
+      try {
+         Thread.sleep(2000);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
       List<WebElement> productPrice = productPage.productPrices;
       for (WebElement e : productPrice) {
          double price = productPage.getPriceAsInt(e);
