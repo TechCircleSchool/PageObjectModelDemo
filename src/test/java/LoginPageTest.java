@@ -7,7 +7,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class LoginPageTest {
 
@@ -18,8 +21,9 @@ public class LoginPageTest {
    @BeforeSuite
    public void goToSauceDemo() {
       driver = Driver.getDriver();
-      driver.get("http://practice.automationtesting.in/shop/");
+      driver.get("http://practice.automationtesting.in/shop/?min_price=150&max_price=450");
       driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      driver.manage().window().maximize();
    }
 
 //   @Test
@@ -53,8 +57,19 @@ public class LoginPageTest {
    }
 
    @Test
-   public void verifySlider() {
-      productPage.setLeftSlider(450);
-//      Assert.assertEquals(450, 450);
+   public void verifySliderFilter() {
+      int filterToBeSet = 450;
+//      productPage.setLeftSlider(filterToBeSet);
+//      productPage.filterBtn.click();
+//      try {
+//         Thread.sleep(2000);
+//      } catch (InterruptedException e) {
+//         e.printStackTrace();
+//      }
+      List<WebElement> productPrice = productPage.productPrices;
+      for (WebElement e : productPrice) {
+         double price = productPage.getPriceAsInt(e);
+         assertThat(price).isLessThanOrEqualTo(filterToBeSet);
+      }
    }
 }

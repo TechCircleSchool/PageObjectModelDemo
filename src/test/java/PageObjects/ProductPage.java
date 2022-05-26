@@ -19,15 +19,23 @@ public class ProductPage {
    @FindBy(xpath = "//*[@class='inventory_item']")
    public List<WebElement> productList;
    @FindBy(xpath = "//*[contains(@class,'price_slider')]/span[2]")
-   public WebElement rightSlider;
+   private WebElement rightSlider;
    @FindBy(css = "div.price_label > span.to")
-   public WebElement priceTo;
+   private WebElement priceTo;
+   @FindBy(xpath = "//ins/span[contains(@class,'amount')] | //span/span[contains(@class,'amount')]")
+   public List<WebElement> productPrices;
+   @FindBy(css = "button.button")
+   public WebElement filterBtn;
 
    public void setLeftSlider(int maxPrice) {
-      int price;
+      double price;
       do {
-         price = Integer.parseInt(priceTo.getText().substring(1)); // $450 ---> 450
+         price = getPriceAsInt(priceTo); // $450 ---> 450
          rightSlider.sendKeys(Keys.ARROW_LEFT);
       } while (price > maxPrice + 1);
+   }
+
+   public double getPriceAsInt(WebElement element) {
+      return Integer.parseInt(element.getText().substring(1));
    }
 }
